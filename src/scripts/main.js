@@ -1,108 +1,112 @@
-let formContainer = document.querySelector("#form-container");
 
-formContainer.innerHTML = `<section>
-<label for="resourcename">Resource Name</label>
-<input type="text" name="resourcename" id="resource-name">
-</section>
-<section>
-<label for="resourcelink">Resource Link</label>
-<input type="text" name="resourcelink" id="resource-link">
-</section>
-<section>
-<label for="resourcetype">Resource Type</label>
-<input type="radio" name="resourcetype" value="Video" checked> Video
-<input type="radio" name="resourcetype" value="Article"> Article<br>
-</section>
-<section>
-  <button type="button" id="add-button">Add Resource</button>
-</section>`;
-
-const videosContainer = document.createElement("section");
-videosContainer.classList.add("videos-container");
-const articlesContainer = document.createElement("section");
-articlesContainer.classList.add("articles-container");
-
-
-let resourcesContainer = document.querySelector("#resources-container");
-resourcesContainer.appendChild(videosContainer);
-resourcesContainer.appendChild(articlesContainer);
-
-
-let resourcesArray = [
-  {
-    name: "resource1",
-    link: "resource1link",
-    type: "Video"
-  },
-  {
-    name: "resource2",
-    link: "resource2link",
-    type: "Article"
-  },
-  {
-    name: "resource3",
-    link: "resource3link",
-    type: "Video"
-  },
-  {
-    name: "resource4",
-    link: "resource4link",
-    type: "Video"
-  },
-  {
-    name: "resource5",
-    link: "resource5link",
-    type: "Article"
-  },
-  {
-    name: "resource6",
-    link: "resource6link",
-    type: "Video"
-  }
+const students = [
+    {
+        name: "Chris Miller",
+        class: "History",
+        info: "Failed last exam",
+        score: 59
+    },
+    {
+        name: "Courtney Seward",
+        class: "History",
+        info: "Has completed all homework",
+        score: 91
+    },
+    {
+        name: "Garrett Ward",
+        class: "History",
+        info: "Wonderful at helping other students",
+        score: 88
+    },
+    {
+        name: "John Dulaney",
+        class: "History",
+        info: "Has never missed a class or exam",
+        score: 92
+    },
+    {
+        name: "Greg Lawrence",
+        class: "History",
+        info: "Sub-par performance all around",
+        score: 64
+    },
+    {
+        name: "Leah Duvic",
+        class: "History",
+        info: "Wonderful student",
+        score: 97
+    },
+    {
+        name: "Jesse Page",
+        class: "History",
+        info: "Smokes too much. Distracting.",
+        score: 76
+    },
+    {
+        name: "Kevin Haggerty",
+        class: "History",
+        info: "Falls asleep in class",
+        score: 79
+    },
+    {
+        name: "Max Wolf",
+        class: "History",
+        info: "Talks too much",
+        score: 83
+    },
+    {
+        name: "Lissa Goforth",
+        class: "History",
+        info: "Asks pointless, unrelated questions",
+        score: 78
+    },
+    {
+        name: "Tyler Bowman",
+        class: "History",
+        info: "When was the last time he attended class?",
+        score: 48
+    },
+    {
+        name: "Ray Medrano",
+        class: "History",
+        info: "Needs to contribute to in-class discussions",
+        score: 95
+    }
 ]
 
-let createAndAppendResources = () => {
-  // for(let i = 0; i < resourcesArray.length; i++){
-  //   console.log(resourcesArray[i]);
-  // }
-  articlesContainer.innerHTML = "";
-  videosContainer.innerHTML = "";
+let formContainer = document.querySelector("#container");
 
-  resourcesArray.forEach(function(resourceObj){
-    console.log(resourceObj);
-    const resourceElement = document.createElement("section");
-    // <a href={link}>{name}</a>
-    const linkElement = document.createElement("a");
-    linkElement.textContent = resourceObj.name;
-    linkElement.setAttribute("href", resourceObj.link);
-    resourceElement.appendChild(linkElement);
-    
-    if(resourceObj.type === "Article"){
-      articlesContainer.appendChild(resourceElement);
-    } else if(resourceObj.type === "Video") {
-      videosContainer.appendChild(resourceElement);
-    }
-  })
+const h1 = (title, style) => {
+    return `<h1 class="${style}">${title}</h1>`
 }
 
-createAndAppendResources();
+const section = (title, style) => {
+    return `<section class="bordered dashed ${style}">${title}</section>`
+}
 
-let addButton = document.querySelector("#add-button");
-addButton.addEventListener("click", () => {
-  console.log("Button was clicked");
+const aside = (title, style) => {
+    return `<aside class="${style}">${title}</aside>`
+}
 
-  let resourceName = document.querySelector('input[name="resourcename"]').value;
-  let resourceLink = document.querySelector('input[name="resourcelink"]').value;
-  let resourceType = document.querySelector('input[name="resourcetype"]:checked').value;
+const studentpass = (name, className, info) => `
+ <div id="studentpass">
+    ${h1(name, "xx-large passing")}
+    ${section(className, "section--padded")}  
+    ${aside(info, "pushRight")}
+ </div>
+`
+const studentfail = (name, className, info) => `
+    <div id= "studentfail">
+        ${h1(name, "xx-large failing")}
+        ${section(className, "section--padding")}
+        ${aside(info, "pushRight")}
+    <div>
+`
 
-  console.log("Input values: ", resourceName, resourceLink, resourceType);
-
-  let resource = {
-    name: resourceName,
-    link: resourceLink,
-    type: resourceType
-  }
-
-  resourcesArray.push(resource);
-  createAndAppendResources();
-})
+for (let i =0; i < students.length; i++) {      
+    if (students[i].score >= 60) {
+        formContainer.innerHTML += studentpass(students[i].name, students[i].class, students[i].info);
+     } else {
+        formContainer.innerHTML += studentfail(students[i].name, students[i].class, students[i].info);
+    }
+}
